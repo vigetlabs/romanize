@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+input  = ARGV.last
+output = 0
+
+def value_of(char)
+  {
+    "I" => 1,
+    "V" => 5,
+    "X" => 10,
+    "L" => 50,
+    "C" => 100,
+    "D" => 500,
+    "M" => 1000
+  }[char]
+end
+
+input.length.times do |i|
+  current  = value_of(input[i])
+  next_val = value_of(input[i + 1]).to_i
+
+  current *= -1 if current < next_val
+  output  += current
+end
+
+print output
