@@ -39,9 +39,11 @@ highestContained arabic = conversions |> filter ((arabic >=) . snd) |> last
 firstFourCombinable :: [Char] -> Bool
 firstFourCombinable roman
   | (length roman < 4) = False
-  | otherwise = case roman |> head |> valueOf |> (5 *) |> possibleRoman of
-    Just _  -> all (head roman ==) (take 4 roman)
+  | otherwise = case first |> valueOf |> (5 *) |> possibleRoman of
+    Just _  -> all (first ==) (take 4 roman)
     Nothing -> False
+    where
+      first = head roman
 
 -- | Combine the first four characters
 -- | E.g. IIII -> IV
@@ -56,9 +58,12 @@ combineFirstFour roman = big_roman : small_roman : (drop 4 roman)
 firstAndThirdCombinable :: [Char] -> Bool
 firstAndThirdCombinable roman
   | (length roman < 3) = False
-  | otherwise = case roman |> head |> valueOf |> (2 *) |> possibleRoman of
-    Just _  -> head roman == roman !! 2
+  | otherwise = case first |> valueOf |> (2 *) |> possibleRoman of
+    Just _  -> first == third
     Nothing -> False
+    where
+      first = head roman
+      third = roman !! 2
 
 -- | Combine the first and third characters
 -- | E.g. VIV -> IX
@@ -66,7 +71,7 @@ combineFirstAndThird :: [Char] -> [Char]
 combineFirstAndThird roman = big_roman : small_roman : (drop 3 roman)
   where
     small_roman = roman !! 1
-    big_roman   = romanOf (2 * valueOf (head roman))
+    big_roman   = roman |> head |> valueOf |> (2 *) |> romanOf
 
 -- | Given a string of Roman characters and an integer, recursively:
 -- | 1. Combine first four characters if possible
