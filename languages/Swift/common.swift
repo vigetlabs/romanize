@@ -8,7 +8,6 @@ func validateInputOrExit(arguments: [String], regex: String) -> String {
 
     let input : String = arguments[1]
     let validInput = input.rangeOfString(regex, options: .RegularExpressionSearch) != nil
-
     if validInput == false {
         println("Input must match /\(regex)")
         exit(2)
