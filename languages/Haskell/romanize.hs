@@ -1,5 +1,6 @@
 import System.Environment(getArgs)
 import Data.List(find)
+import Text.Printf(printf)
 
 (|>) :: a -> (a -> b) -> b
 (|>) = flip ($)
@@ -17,7 +18,7 @@ conversions =  [('I', 1),
 valueOf :: Char -> Int
 valueOf roman = case lookup roman conversions of
   Just i  -> i
-  Nothing -> error "Invalid Roman numeral"
+  Nothing -> roman |> printf "Invalid Roman numeral: %c" |> error
 
 -- | Given an Arabic number, return its Roman/Arabic pair or nothing
 possibleRoman :: Int -> Maybe (Char, Int)
@@ -27,17 +28,20 @@ possibleRoman number = find ((number ==) . snd) conversions
 romanOf :: Int -> Char
 romanOf number = case possibleRoman number of
   Just i  -> fst i
-  Nothing -> error "Invalid Arabic numeral"
+  Nothing -> number |> printf "No Roman numeral for %i" |> error
 
 -- | Return the highest Roman/Arabic pair less than or equal to the number
 highestContained :: Int -> (Char, Int)
 highestContained arabic = conversions |> filter ((arabic >=) . snd) |> last
 
--- | Are the first four Roman characters all the same?
+-- | Are the first four Roman characters all the same and is there a Roman
+-- | character for five times their value?
 firstFourCombinable :: [Char] -> Bool
 firstFourCombinable roman
   | (length roman < 4) = False
-  | otherwise = all (head roman ==) (take 4 roman)
+  | otherwise = case roman |> head |> valueOf |> (5 *) |> possibleRoman of
+    Just _  -> all (head roman ==) (take 4 roman)
+    Nothing -> False
 
 -- | Combine the first four characters
 -- | E.g. IIII -> IV

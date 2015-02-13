@@ -17,7 +17,7 @@ conversions =  [('I', 1),
 valueOf :: Char -> Int
 valueOf roman = case lookup roman conversions of
   Just i  -> i
-  Nothing -> error "Invalid Roman numeral"  
+  Nothing -> roman |> printf "Invalid Roman numeral: %c" |> error
 
 -- | Get the numerical value of a Roman numeral
 deromanize :: [Char] -> Int
