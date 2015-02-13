@@ -63,7 +63,7 @@ firstAndThirdCombinable roman
 -- | Combine the first and third characters
 -- | E.g. VIV -> IX
 combineFirstAndThird :: [Char] -> [Char]
-combineFirstAndThird roman =  big_roman : small_roman : (drop 3 roman)
+combineFirstAndThird roman = big_roman : small_roman : (drop 3 roman)
   where
     small_roman = roman !! 1
     big_roman   = romanOf (2 * valueOf (head roman))
@@ -76,10 +76,11 @@ combineFirstAndThird roman =  big_roman : small_roman : (drop 3 roman)
 -- |    number, add it to the string, subtract its value from the number
 romanize :: [Char] -> Int -> [Char]
 romanize roman arabic
-  | firstFourCombinable roman = romanize (combineFirstFour roman) arabic
+  | firstFourCombinable roman     = romanize (combineFirstFour roman) arabic
   | firstAndThirdCombinable roman = romanize (combineFirstAndThird roman) arabic
-  | (arabic == 0) = reverse roman
-  | otherwise = romanize (r:roman) (arabic - a) where (r, a) = highestContained arabic
+  | arabic == 0                   = reverse roman
+  | otherwise                     = romanize (r:roman) (arabic - a)
+                                    where (r, a) = highestContained arabic
 
 main :: IO ()
 main = do
