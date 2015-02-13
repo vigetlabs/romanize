@@ -1,22 +1,4 @@
-import Foundation
-
-func validArabic(arabic: String) -> Bool {
-    return arabic.rangeOfString("^[0-9]*$", options: .RegularExpressionSearch) != nil
-}
-
-let arguments = Process.arguments
-
-if (arguments.count != 2) {
-    println("Usage: \(arguments[0]) <arabic-numeral>")
-    exit(1)
-}
-
-let arabic : String = Process.arguments[1]
-
-if validArabic(arabic) != true {
-    println("Input must be a string of 0-9")
-    exit(2)
-}
+let arabic = validateInputOrExit(Process.arguments, "^[0-9]*$");
 
 func one(place: Int) -> String {
     let ones = [ 0: "I", 1: "X", 2: "C", 3: "M" ]
