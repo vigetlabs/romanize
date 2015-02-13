@@ -13,11 +13,13 @@ conversions =  [('I', 1),
                 ('D', 500),
                 ('M', 1000)]
 
+-- | Given a Roman character, get its Arabic value
 valueOf :: Char -> Int
 valueOf roman = case lookup roman conversions of
   Just i  -> i
   Nothing -> error "Invalid Roman numeral"  
 
+-- | Get the numerical value of a Roman numeral
 deromanize :: [Char] -> Int
 deromanize roman = case roman of
   []       -> 0
