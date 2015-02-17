@@ -1,0 +1,18 @@
+namespace :Clojure do
+  task :check do
+    `which lein`
+    raise "Leinengen not found, please run `brew install leinengen`" unless $?.success?
+  end
+
+  task :clean do
+    path = File.dirname(__FILE__)
+    `cd #{ path }/lib/deromanize; lein clean`
+    `cd #{ path }/lib/romanize; lein clean`
+  end
+
+  task :build => :check do
+    path = File.dirname(__FILE__)
+    `cd #{ path }/lib/deromanize; lein uberjar`
+    `cd #{ path }/lib/romanize; lein uberjar`
+  end
+end
