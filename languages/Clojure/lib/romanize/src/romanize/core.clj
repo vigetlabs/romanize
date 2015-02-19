@@ -20,10 +20,11 @@
   (last (filter (fn [[value key]] (>= n value))
                 table)))
 
-(defn romanize
-  ([n] (if (= n 0) ""
-           (let [[value key](highest n)]
-             (str key (romanize (- n value)))))))
+(defn romanize [n]
+  (let [[value key] (highest n)
+        next (- n value)]
+    (when (> value 0)
+      (str key (romanize next)))))
 
 (defn -main
   "Take STDIN number and convert it into roman numerals"
