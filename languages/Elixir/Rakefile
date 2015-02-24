@@ -1,0 +1,21 @@
+namespace :Elixir do
+  task :clean do
+    path = File.dirname(__FILE__)
+    `cd #{path}; rm -rf _build romanize deromanize`
+  end
+
+  task :check do
+    `which elixir`
+    raise "No Elixir interpreter found" unless $?.success?
+
+    `which mix`
+    raise "Mix not found" unless $?.success?
+  end
+
+  task :build => :check do
+    path = File.dirname(__FILE__)
+    `cd #{path}; mix escript.build`
+  end
+end
+
+task :default => 'Elixir:build'
