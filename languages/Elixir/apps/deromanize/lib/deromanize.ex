@@ -16,8 +16,9 @@ defmodule Deromanize do
     IO.puts deromanize(input)
   end
 
+  defp deromanize(input, number \\ 0)
   defp deromanize("", number), do: number
-  defp deromanize(input, number \\ 0) do
+  defp deromanize(input, number) do
     current = input |> String.at(0) |> integer_of
     next    = input |> String.at(1) |> integer_of
 

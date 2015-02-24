@@ -23,8 +23,9 @@ defmodule Romanize do
     IO.puts romanize(number)
   end
 
+  defp romanize(number, result \\ "")
   defp romanize(0, result), do: result
-  defp romanize(number, result \\ "") do
+  defp romanize(number, result) do
     value = highest_under number
     roman = roman_of value
 
