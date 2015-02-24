@@ -1,0 +1,22 @@
+namespace :Haskell do
+  task :clean do
+    path = File.dirname(__FILE__)
+    `cd #{path}; rm -f romanize deromanize *.hi *.o`
+  end
+
+  task :check do
+    `which ghc`
+
+    unless $?.success?
+      raise "ghc not installed, please run `brew install ghc`"
+    end
+  end
+
+  task :build => :check do
+    path = File.dirname(__FILE__)
+    `cd #{path}; ghc -Wall --make romanize`
+    `cd #{path}; ghc -Wall --make deromanize`
+  end
+end
+
+task :default => 'Haskell:build'
