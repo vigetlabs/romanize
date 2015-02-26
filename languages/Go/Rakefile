@@ -9,11 +9,13 @@ namespace :Go do
 
   task :clean do
     path = File.dirname(File.expand_path(__FILE__))
+    `cd #{path}; rm -f romanize`
     `cd #{path}; rm -f deromanize`
   end
 
   task :build do
     path = File.dirname(File.expand_path(__FILE__))
+    `export GOPATH=#{path}; cd #{path}; go build -o ./romanize ./src/romanize.go`
     `export GOPATH=#{path}; cd #{path}; go build -o ./deromanize ./src/deromanize.go`
   end
 end
