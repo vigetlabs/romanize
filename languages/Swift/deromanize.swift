@@ -1,14 +1,17 @@
 import Foundation
 
+// Return a (head, tail) tuple if the array has any elements. Otherwise, return nil.
 func decompose<T>(array: [T]) -> (T, [T])? {
-    return array.count > 0 ? (array[0], Array(array[1..<array.count])) : nil;
+    return array.count > 0 ? (array.first!, Array(dropFirst(array))) : nil;
 }
 
 func valueOfRoman(numeral: Character) -> Int {
     return ["I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000][numeral] ?? 0
 }
 
-func considerNextCharacter(current: Character, rest:[Character], value: Int) -> ([Character], Int) {
+// Add the value of the current numeral to the running total. Peek at the next numeral to see if
+// this character belongs to a two-character numeral, i.e. "IV".
+func addNumeralValue(current: Character, rest:[Character], value: Int) -> ([Character], Int) {
     let currentValue = valueOfRoman(current)
     var result = (rest, value + currentValue)
 
@@ -25,7 +28,7 @@ func considerNextCharacter(current: Character, rest:[Character], value: Int) -> 
 
 func deromanize(numerals: [Character], value: Int) -> String {
     if let (head, tail) = decompose(numerals) {
-        let (rest, newValue) = considerNextCharacter(head, tail, value)
+        let (rest, newValue) = addNumeralValue(head, tail, value)
         return deromanize(rest, newValue)
     } else {
         return String(value)

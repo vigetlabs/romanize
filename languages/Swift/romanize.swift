@@ -1,39 +1,39 @@
 let arabic = validateInputOrExit(Process.arguments, "^[0-9]*$");
 
-func one(place: Int) -> String {
+func one(powerOfTen: Int) -> String {
     let ones = [ 0: "I", 1: "X", 2: "C", 3: "M" ]
-    return ones[place] ?? "[no one]"
+    return ones[powerOfTen] ?? "[no one value for 10^\(powerOfTen)s place]"
 }
 
-func four(place: Int) -> String {
-    return "\(one(place))\(five(place))"
+func four(powerOfTen: Int) -> String {
+    return "\(one(powerOfTen))\(five(powerOfTen))"
 }
 
-func five(place: Int) -> String {
+func five(powerOfTen: Int) -> String {
     let fives = [ 0: "V", 1: "L", 2: "D" ]
-    return fives[place] ?? "[no five]"
+    return fives[powerOfTen] ?? "[no five value for 10^\(powerOfTen)s place]"
 }
 
-func nine(place: Int) -> String {
-    return "\(one(place))\(one(place + 1))"
+func nine(powerOfTen: Int) -> String {
+    return "\(one(powerOfTen))\(one(powerOfTen + 1))"
 }
 
-
-func romanize(number: Int, place: Int) -> String {
+func romanize(number: Int, powerOfTen: Int) -> String {
     var roman: String
 
     switch number {
     case 1...3:
-        roman = "".join(Array(count: number, repeatedValue: one(place)))
+        roman = "".join(Array(count: number, repeatedValue: one(powerOfTen)))
     case 4:
-        roman = four(place)
+        roman = four(powerOfTen)
     case 5:
-        roman = five(place)
+        roman = five(powerOfTen)
     case 6...8:
-        let ones = romanize(number - 5, place)
-        roman = "\(five(place))\(ones)"
+        let five = romanize(5, powerOfTen)
+        let ones = romanize(number - 5, powerOfTen)
+        roman = "\(five)\(ones)"
     case 9:
-        roman = nine(place)
+        roman = nine(powerOfTen)
     default:
         roman = ""
     }
@@ -43,8 +43,8 @@ func romanize(number: Int, place: Int) -> String {
 
 let characters = Array(arabic)
 let numbersInReverse = characters.reverse().map { String($0).toInt()! }
-let places = 0..<characters.count
-let result = places.map { (numbersInReverse[$0], $0) }
+let powersOfTen = 0..<characters.count
+let result = powersOfTen.map { (numbersInReverse[$0], $0) }
     .map(romanize)
     .reverse()
 
