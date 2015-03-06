@@ -26,4 +26,4 @@
   "Take STDIN roman numerals and convert them to a decimal value"
   [& args]
   (doseq [line (line-seq (java.io.BufferedReader. *in*))]
-    (println (apply digitize (str/split line #"")))))
+    (println (apply digitize (rest (str/split line #""))))))
