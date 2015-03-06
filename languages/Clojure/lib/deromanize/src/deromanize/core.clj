@@ -2,13 +2,13 @@
   (:require [clojure.string :as str])
   (:gen-class))
 
-(def table { "I" 1
-             "V" 5
-             "X" 10
-             "L" 50
-             "C" 100
-             "D" 500
-             "M" 1000 })
+(def table { \I 1
+             \V 5
+             \X 10
+             \L 50
+             \C 100
+             \D 500
+             \M 1000 })
 
 (defn convert
   [char]
@@ -26,4 +26,4 @@
   "Take STDIN roman numerals and convert them to a decimal value"
   [& args]
   (doseq [line (line-seq (java.io.BufferedReader. *in*))]
-    (println (apply digitize (rest (str/split line #""))))))
+    (println (apply digitize (seq line)))))
