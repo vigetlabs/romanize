@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var arabicNumber = process.argv[2];
+
+if (!arabicNumber) {
+  process.exit(1);
+}
+
+arabicNumber = parseInt(arabicNumber, 10);
+
+var values = [ 1000, 500, 100, 50, 10, 5, 1 ];
+var letters = [ 'M', 'D', 'C', 'L', 'X', 'V', 'I' ];
+
+var i = 0;
+
+var romanized = '';
+
+while (arabicNumber !== 0) {
+  var decrement = i + 1 + (i + 1) % 2;
+
+  if (arabicNumber < values[i] && arabicNumber - values[i] >= -values[decrement]) {
+    arabicNumber += values[decrement];
+    romanized += letters[decrement];
+  }
+
+  if (arabicNumber - values[i] >= 0) {
+    arabicNumber -= values[i];
+    romanized += letters[i];
+  } else { 
+    ++i;
+  }
+}
+
+console.log(romanized);
