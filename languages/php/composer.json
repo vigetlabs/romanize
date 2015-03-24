@@ -1,0 +1,13 @@
+{
+    "require-dev": {
+        "phpspec/phpspec": "~2.1.1"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src"
+        }
+    }
+}

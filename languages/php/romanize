@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+require 'vendor/autoload.php';
+
+$romanize = new Romanize();
+
+echo $romanize->convert($argv[1]) . "\n";
